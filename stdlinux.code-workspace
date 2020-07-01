@@ -1,0 +1,11 @@
+{
+	"folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../stdlinux2-source"
+        }
+    ],
+    "settings": {}
+}
