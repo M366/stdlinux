@@ -1,26 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static void do_cat(FILE *f) {
+    int c;
+
+    while ((c = fgetc(f)) != EOF) // EOF is defined -1
+        if (putchar(c) < 0)
+            exit(1);
+}
+
 int main(int argc, char *argv[]) {
     int i;
 
-    if (argc < 2) {
-        fprintf(stderr, "%s: file name not given\n", argv[0]);
-        exit(1);
-    }
+    if (argc == 1)
+        do_cat(stdin);
 
     for (i = 1; i < argc; i++) {
         FILE *f;
-        int c;
         
         f = fopen(argv[i], "r");
         if (!f) {
             perror(argv[i]);
             exit(1);
         }
-        while ((c = fgetc(f)) != EOF)
-            if (putchar(c) < 0)
-                exit(1);
+        do_cat(f);
         fclose(f);
     }
     exit(0);
