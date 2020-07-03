@@ -4,9 +4,19 @@
 static void do_cat(FILE *f) {
     int c;
 
-    while ((c = fgetc(f)) != EOF) // EOF is defined -1
-        if (putchar(c) < 0)
-            exit(1);
+    while ((c = fgetc(f)) != EOF) {
+        switch (c) {
+        case '\t':
+            if (fputs("\\t", stdout) == EOF) exit(1);
+            break;
+        case '\n':
+            if (fputs("$\n", stdout) == EOF) exit(1);
+            break;
+        default:
+            if (putchar(c) < 0) exit(1);
+            break;
+        }
+    }
 }
 
 int main(int argc, char *argv[]) {
